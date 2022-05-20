@@ -3,7 +3,6 @@ package com.bounderoll.file_system.service;
 import com.bounderoll.file_system.common.FileStorage;
 import com.bounderoll.file_system.response.UploadFileResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;

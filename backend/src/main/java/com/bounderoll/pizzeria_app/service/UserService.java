@@ -2,8 +2,8 @@ package com.bounderoll.pizzeria_app.service;
 
 import com.bounderoll.pizzeria_app.config.jwt.JwtUtils;
 import com.bounderoll.pizzeria_app.response.JwtResponse;
-import com.bounderoll.pizzeria_app.dto.LoginRequest;
-import com.bounderoll.pizzeria_app.dto.RegisterRequest;
+import com.bounderoll.pizzeria_app.dto.LoginDto;
+import com.bounderoll.pizzeria_app.dto.RegisterDto;
 import com.bounderoll.pizzeria_app.model.Role;
 import com.bounderoll.pizzeria_app.model.User;
 import com.bounderoll.pizzeria_app.model.enums.ERole;
@@ -42,7 +42,7 @@ public class UserService {
     @Autowired
     MailSender mailSender;
 
-    public User create(RegisterRequest dto) {
+    public User create(RegisterDto dto) {
         User user = new User(dto.getUsername(), dto.getEmail(), passwordEncoder.encode(dto.getPassword()));
 
         Set<String> requestRoles = dto.getRoles();
@@ -110,7 +110,7 @@ public class UserService {
         return true;
     }
 
-    public JwtResponse login(LoginRequest dto) {
+    public JwtResponse login(LoginDto dto) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         dto.getUsername(),

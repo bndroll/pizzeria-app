@@ -7,7 +7,7 @@ import java.util.Set;
 
 @Data
 @AllArgsConstructor
-public class RegisterRequest {
+public class RegisterDto {
     private String username;
     private String email;
     private Set<String> roles;

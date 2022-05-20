@@ -1,8 +1,8 @@
 package com.bounderoll.pizzeria_app.controller;
 
-import com.bounderoll.pizzeria_app.dto.LoginRequest;
+import com.bounderoll.pizzeria_app.dto.LoginDto;
 import com.bounderoll.pizzeria_app.response.MessageResponse;
-import com.bounderoll.pizzeria_app.dto.RegisterRequest;
+import com.bounderoll.pizzeria_app.dto.RegisterDto;
 import com.bounderoll.pizzeria_app.repository.UserRepository;
 import com.bounderoll.pizzeria_app.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +20,7 @@ public class AuthController {
     UserService userService;
 
     @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody RegisterRequest dto) {
+    public ResponseEntity<?> register(@RequestBody RegisterDto dto) {
         if (userRepository.existsByUsername(dto.getUsername()) || userRepository.existsByEmail(dto.getEmail()))
             return ResponseEntity.badRequest().body(new MessageResponse("User already exist"));
 
@@ -28,7 +28,7 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginRequest dto) {
+    public ResponseEntity<?> login(@RequestBody LoginDto dto) {
         return ResponseEntity.ok(userService.login(dto));
     }
 

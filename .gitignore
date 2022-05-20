@@ -4,3 +4,4 @@
 backend/target
 file-system/target
 file-system/uploads
+uploads/*
