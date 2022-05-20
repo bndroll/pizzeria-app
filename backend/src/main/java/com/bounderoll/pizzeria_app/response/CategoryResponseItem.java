@@ -8,4 +8,5 @@ import lombok.Data;
 public class CategoryResponseItem {
     private String category;
     private double rating;
+    private long count;
 }

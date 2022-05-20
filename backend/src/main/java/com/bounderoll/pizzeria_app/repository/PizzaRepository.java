@@ -15,8 +15,8 @@ import java.util.List;
 public interface PizzaRepository extends JpaRepository<Pizza, Long> {
     List<Pizza> findByTitle(@Param("title") String title);
 
-    @Query(value = "SELECT new com.bounderoll.pizzeria_app.response.CategoryResponseItem(p.category, AVG(p.rating) as rating)" +
-                   " FROM Pizza AS p GROUP BY p.category order by rating desc")
+    @Query(value = "SELECT new com.bounderoll.pizzeria_app.response.CategoryResponseItem(p.category, AVG(p.rating) as rating, COUNT(*) as amount)" +
+                   " FROM Pizza AS p GROUP BY p.category ORDER BY amount DESC")
     List<CategoryResponseItem> findPizzaCategories();
 
     @Query(
