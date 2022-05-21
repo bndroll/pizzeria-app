@@ -3,6 +3,8 @@ package com.bounderoll.pizzeria_app.service;
 import com.bounderoll.pizzeria_app.model.PizzaOrder;
 import com.bounderoll.pizzeria_app.model.RestaurantTableOrder;
 import com.bounderoll.pizzeria_app.model.User;
+import lombok.Builder;
+import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,6 +13,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Data
+@Builder
 public class UserDetailsImpl implements UserDetails {
     private final Long id;
     private final String username;
@@ -46,16 +50,16 @@ public class UserDetailsImpl implements UserDetails {
                 .map(role -> new SimpleGrantedAuthority(role.getName().name()))
                 .collect(Collectors.toList());
 
-        return new UserDetailsImpl(
-                user.getId(),
-                user.getUsername(),
-                user.getEmail(),
-                user.getPassword(),
-                user.isActive(),
-                authorities,
-                user.getPizzaOrders(),
-                user.getTableOrders()
-        );
+        return UserDetailsImpl.builder()
+                .id(user.getId())
+                .username(user.getUsername())
+                .email(user.getEmail())
+                .password(user.getPassword())
+                .isActive(user.isActive())
+                .authorities(authorities)
+                .pizzaOrders(user.getPizzaOrders())
+                .tableOrders(user.getTableOrders())
+                .build();
     }
 
     @Override
@@ -71,26 +75,6 @@ public class UserDetailsImpl implements UserDetails {
     @Override
     public String getUsername() {
         return username;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public boolean isActive() {
-        return isActive;
-    }
-
-    public Collection<? extends PizzaOrder> getPizzaOrders() {
-        return pizzaOrders;
-    }
-
-    public Collection<? extends RestaurantTableOrder> getTableOrders() {
-        return tableOrders;
     }
 
     @Override

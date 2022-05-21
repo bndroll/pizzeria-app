@@ -1,6 +1,7 @@
 package com.bounderoll.pizzeria_app.model;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -13,6 +14,7 @@ import java.util.Set;
 @Table(name = "usr")
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class User {
     @Id
     @Column(name = "id")
@@ -28,9 +30,10 @@ public class User {
     @Column(name = "password")
     private String password;
 
-    @Column(name = "isActive")
+    @Column(name = "is_active")
     private boolean isActive;
 
+    @Column(name = "activation_code")
     private String activationCode;
 
     @ManyToMany(fetch = FetchType.LAZY)

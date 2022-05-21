@@ -19,8 +19,12 @@ import java.util.Optional;
 @RequestMapping("/pizza")
 @CrossOrigin(origins = "*")
 public class PizzaController {
+    private final PizzaService pizzaService;
+
     @Autowired
-    PizzaService pizzaService;
+    public PizzaController(final PizzaService pizzaService) {
+        this.pizzaService = pizzaService;
+    }
 
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")

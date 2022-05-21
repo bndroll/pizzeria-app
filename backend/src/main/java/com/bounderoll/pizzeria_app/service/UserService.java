@@ -1,7 +1,6 @@
 package com.bounderoll.pizzeria_app.service;
 
 import com.bounderoll.pizzeria_app.config.jwt.JwtUtils;
-import com.bounderoll.pizzeria_app.response.JwtResponse;
 import com.bounderoll.pizzeria_app.dto.LoginDto;
 import com.bounderoll.pizzeria_app.dto.RegisterDto;
 import com.bounderoll.pizzeria_app.model.Role;
@@ -9,38 +8,50 @@ import com.bounderoll.pizzeria_app.model.User;
 import com.bounderoll.pizzeria_app.model.enums.ERole;
 import com.bounderoll.pizzeria_app.repository.RoleRepository;
 import com.bounderoll.pizzeria_app.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.bounderoll.pizzeria_app.response.JwtResponse;
+import com.bounderoll.pizzeria_app.response.PromoCodeResponse;
+import com.bounderoll.pizzeria_app.response.UserResponse;
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.WebApplicationContext;
 
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 @Service
+@Scope(value = WebApplicationContext.SCOPE_REQUEST, proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class UserService {
-    @Autowired
-    AuthenticationManager authenticationManager;
+    private final User user;
 
-    @Autowired
-    private UserRepository userRepository;
+    private final AuthenticationManager authenticationManager;
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final RoleRepository roleRepository;
+    private final JwtUtils jwtUtils;
+    private final MailSender mailSender;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    public UserService(
+            final AuthenticationManager authenticationManager,
+            final UserRepository userRepository,
+            final PasswordEncoder passwordEncoder,
+            final RoleRepository roleRepository,
+            final JwtUtils jwtUtils,
+            final MailSender mailSender) {
 
-    @Autowired
-    RoleRepository roleRepository;
+        this.authenticationManager = authenticationManager;
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+        this.roleRepository = roleRepository;
+        this.jwtUtils = jwtUtils;
+        this.mailSender = mailSender;
 
-    @Autowired
-    JwtUtils jwtUtils;
-
-    @Autowired
-    MailSender mailSender;
+        this.user = setCurrentSessionUser();
+    }
 
     public User create(RegisterDto dto) {
         User user = new User(dto.getUsername(), dto.getEmail(), passwordEncoder.encode(dto.getPassword()));
@@ -120,5 +131,42 @@ public class UserService {
         String jwt = jwtUtils.generateJwtToken(authentication);
 
         return new JwtResponse(jwt);
+    }
+
+    public UserResponse findMe() {
+        return new UserResponse(user.getUsername(), user.getEmail(), user.getPizzaOrders());
+    }
+
+    public Optional<User> findByUsername(String username) {
+        return userRepository.findByUsername(username);
+    }
+
+    public boolean existsByUsername(String username) {
+        return userRepository.existsByUsername(username);
+    }
+
+    public boolean existsByEmail(String email) {
+        return userRepository.existsByEmail(email);
+    }
+
+    public PromoCodeResponse checkPromoCode() {
+        if (user.getPizzaOrders().size() % 10 == 0) {
+            return PromoCodeResponse.builder()
+                    .isPromoCode(true)
+                    .amount(new Random().nextInt(5, 30))
+                    .build();
+        }
+
+        return PromoCodeResponse.builder()
+                .isPromoCode(false)
+                .amount(0)
+                .build();
+    }
+
+    private User setCurrentSessionUser() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        UserDetailsImpl principal = (UserDetailsImpl) auth.getPrincipal();
+        String username = principal.getUsername();
+        return findByUsername(username).orElseThrow();
     }
 }

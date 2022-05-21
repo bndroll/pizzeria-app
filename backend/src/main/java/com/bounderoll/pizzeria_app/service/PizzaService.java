@@ -22,11 +22,15 @@ import java.util.Optional;
 
 @Service
 public class PizzaService {
-    @Autowired
-    PizzaRepository pizzaRepository;
+    private final PizzaRepository pizzaRepository;
 
     @Value("${filesystem.url}")
     private String fileSystemBaseUrl;
+
+    @Autowired
+    public PizzaService(final PizzaRepository pizzaRepository) {
+        this.pizzaRepository = pizzaRepository;
+    }
 
     public Pizza create(CreatePizzaDto dto) {
         Pizza pizza = new Pizza(
