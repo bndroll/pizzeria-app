@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class CategoryResponseItem {
+public class CategoryItemResponse {
     private String category;
     private double rating;
     private long count;

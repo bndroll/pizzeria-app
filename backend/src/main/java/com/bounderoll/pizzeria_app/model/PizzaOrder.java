@@ -1,13 +1,17 @@
 package com.bounderoll.pizzeria_app.model;
 
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Data
+@Getter
+@Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "pizza_order")
 public class PizzaOrder {
     @Id

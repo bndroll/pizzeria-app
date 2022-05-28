@@ -1,8 +1,11 @@
 package com.bounderoll.pizzeria_app.model;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import javax.validation.constraints.Max;
@@ -14,6 +17,7 @@ import java.util.Set;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Table(name = "pizza")
 public class Pizza {
     @Id
@@ -44,7 +48,8 @@ public class Pizza {
     @Min(value = 1)
     private int rating;
 
-    @OneToMany(mappedBy = "pizza", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "pizza", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Set<PizzaOrderDetails> orders = new HashSet<>();
 
     public Pizza(String title, String type, int size, String category, int price, int rating) {

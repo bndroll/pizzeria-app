@@ -2,7 +2,6 @@ package com.bounderoll.file_system.controller;
 
 import com.bounderoll.file_system.response.UploadFileResponse;
 import com.bounderoll.file_system.service.FileStorageService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -18,8 +17,11 @@ import java.io.IOException;
 @RequestMapping("/file")
 @CrossOrigin(origins = "*")
 public class FilesController {
-    @Autowired
-    FileStorageService storageService;
+    private final FileStorageService storageService;
+
+    public FilesController(final FileStorageService storageService) {
+        this.storageService = storageService;
+    }
 
     @PostMapping("")
     public ResponseEntity<UploadFileResponse> uploadFile(

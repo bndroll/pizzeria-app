@@ -1,7 +1,22 @@
+# idea
 .idea
+
+# commot
 *.class
 *.jar
+
+# main server
 backend/target
+
+# file system server
 file-system/target
 file-system/uploads
 uploads/*
+
+# online bank server
+online-bank/target
+
+# download card server
+download-sreenshot/.idea
+download-sreenshot/node_modules
+download-sreenshot/dist

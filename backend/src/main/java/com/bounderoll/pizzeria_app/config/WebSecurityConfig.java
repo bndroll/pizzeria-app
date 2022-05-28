@@ -3,7 +3,6 @@ package com.bounderoll.pizzeria_app.config;
 import com.bounderoll.pizzeria_app.config.jwt.AuthEntryPointJwt;
 import com.bounderoll.pizzeria_app.config.jwt.AuthTokenFilter;
 import com.bounderoll.pizzeria_app.service.UserDetailsServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -24,7 +23,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private final AuthEntryPointJwt unauthorizedHandler;
     private final PasswordEncoder passwordEncoder;
 
-    @Autowired
     public WebSecurityConfig(
             final UserDetailsServiceImpl userDetailsService,
             final AuthEntryPointJwt unauthorizedHandler,

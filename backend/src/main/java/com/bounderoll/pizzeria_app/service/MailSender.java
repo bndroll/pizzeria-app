@@ -13,7 +13,6 @@ public class MailSender {
     @Value("${spring.mail.username}")
     private String username;
 
-    @Autowired
     public MailSender(final JavaMailSender mailSender) {
         this.mailSender = mailSender;
     }

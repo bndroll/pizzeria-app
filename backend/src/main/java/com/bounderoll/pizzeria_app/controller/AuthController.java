@@ -4,7 +4,6 @@ import com.bounderoll.pizzeria_app.dto.LoginDto;
 import com.bounderoll.pizzeria_app.dto.RegisterDto;
 import com.bounderoll.pizzeria_app.response.MessageResponse;
 import com.bounderoll.pizzeria_app.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
     private final UserService userService;
 
-    @Autowired
     public AuthController(final UserService userService) {
         this.userService = userService;
     }

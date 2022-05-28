@@ -1,13 +1,15 @@
 package com.bounderoll.pizzeria_app.model;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Data
+@Getter
+@Setter
 @Table(name = "restaurant_table")
 public class RestaurantTable {
     @Id
@@ -18,6 +20,6 @@ public class RestaurantTable {
     @Column(name = "number")
     private int number;
 
-    @OneToMany(mappedBy = "table", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "table", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<RestaurantTableOrder> orders = new HashSet<>();
 }

@@ -1,11 +1,15 @@
 package com.bounderoll.pizzeria_app.model;
 
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
-@Data
+@Getter
+@Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "pizza_order_details")
 public class PizzaOrderDetails {
     @Id

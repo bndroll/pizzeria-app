@@ -9,25 +9,18 @@ import com.bounderoll.pizzeria_app.model.enums.ERole;
 import com.bounderoll.pizzeria_app.repository.RoleRepository;
 import com.bounderoll.pizzeria_app.repository.UserRepository;
 import com.bounderoll.pizzeria_app.response.JwtResponse;
-import com.bounderoll.pizzeria_app.response.PromoCodeResponse;
 import com.bounderoll.pizzeria_app.response.UserResponse;
-import org.springframework.context.annotation.Scope;
-import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.context.WebApplicationContext;
 
 import java.util.*;
 
 @Service
-@Scope(value = WebApplicationContext.SCOPE_REQUEST, proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class UserService {
-    private final User user;
-
     private final AuthenticationManager authenticationManager;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
@@ -49,11 +42,9 @@ public class UserService {
         this.roleRepository = roleRepository;
         this.jwtUtils = jwtUtils;
         this.mailSender = mailSender;
-
-        this.user = setCurrentSessionUser();
     }
 
-    public User create(RegisterDto dto) {
+    public UserResponse create(RegisterDto dto) {
         User user = new User(dto.getUsername(), dto.getEmail(), passwordEncoder.encode(dto.getPassword()));
 
         Set<String> requestRoles = dto.getRoles();
@@ -94,14 +85,15 @@ public class UserService {
 
         sendMessage(user);
 
-        return user;
+        return UserResponse.cast(user);
     }
 
     private void sendMessage(User user) {
         String message = String.format(
-                "Привет, %s! \n" +
-                "Добро пожаловать в пиццерию. \n" +
-                "Пожалуйста, перейдите по ссылке для активации аккаунта: http://localhost:8080/auth/activate/%s",
+                """
+                        Привет, %s!\s
+                        Добро пожаловать в пиццерию.\s
+                        Пожалуйста, перейдите по ссылке для активации аккаунта: http://localhost:8080/auth/activate/%s""",
                 user.getUsername(),
                 user.getActivationCode()
         );
@@ -130,15 +122,17 @@ public class UserService {
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = jwtUtils.generateJwtToken(authentication);
 
-        return new JwtResponse(jwt);
-    }
-
-    public UserResponse findMe() {
-        return new UserResponse(user.getUsername(), user.getEmail(), user.getPizzaOrders());
+        return JwtResponse.builder()
+                .accessToken(jwt)
+                .build();
     }
 
     public Optional<User> findByUsername(String username) {
         return userRepository.findByUsername(username);
+    }
+
+    public Optional<User> findById(Long id) {
+        return userRepository.findById(id);
     }
 
     public boolean existsByUsername(String username) {
@@ -147,26 +141,5 @@ public class UserService {
 
     public boolean existsByEmail(String email) {
         return userRepository.existsByEmail(email);
-    }
-
-    public PromoCodeResponse checkPromoCode() {
-        if (user.getPizzaOrders().size() % 10 == 0) {
-            return PromoCodeResponse.builder()
-                    .isPromoCode(true)
-                    .amount(new Random().nextInt(5, 30))
-                    .build();
-        }
-
-        return PromoCodeResponse.builder()
-                .isPromoCode(false)
-                .amount(0)
-                .build();
-    }
-
-    private User setCurrentSessionUser() {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        UserDetailsImpl principal = (UserDetailsImpl) auth.getPrincipal();
-        String username = principal.getUsername();
-        return findByUsername(username).orElseThrow();
     }
 }

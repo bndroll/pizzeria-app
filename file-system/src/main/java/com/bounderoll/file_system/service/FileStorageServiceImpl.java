@@ -19,8 +19,11 @@ import java.util.Objects;
 
 @Service
 public class FileStorageServiceImpl implements FileStorageService {
-    @Autowired
-    FileStorage fileStorage;
+    private final FileStorage fileStorage;
+
+    public FileStorageServiceImpl(final FileStorage fileStorage) {
+        this.fileStorage = fileStorage;
+    }
 
     @Override
     public UploadFileResponse save(final MultipartFile file, String title) {
