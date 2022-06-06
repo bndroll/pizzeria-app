@@ -1,0 +1,49 @@
+@import '../../scss/variables';
+
+.info__container {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    div {
+        &:last-child {
+            color: $orange;
+        }
+    }
+}
+
+.form__container {
+    display: grid;
+    grid-template: 1fr 1fr 0.2fr 1fr / 2fr 1fr;
+    grid-template-areas: "number number" "person secret" "delimiter delimiter" "address address";
+    grid-gap: 15px;
+}
+
+.field__number {
+    grid-area: number;
+}
+
+.field__person {
+    grid-area: person;
+}
+
+.field__secret {
+    grid-area: secret;
+}
+
+.delimiter {
+    width: 100%;
+    height: 1px;
+    background-color: $gray-line;
+    border-radius: 50%;
+    grid-area: delimiter;
+}
+
+.field__address {
+    grid-area: address;
+}
+
+.form__button {
+    margin-top: 20px;
+}

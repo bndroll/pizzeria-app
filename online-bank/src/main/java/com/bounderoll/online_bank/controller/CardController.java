@@ -117,16 +117,16 @@ public class CardController {
             return ResponseEntity.status(404).body(new MessageResponse("Passing card with this number not found"));
         }
 
+        if (!Objects.equals(dto.getPerson(), cardFrom.getPerson()) || dto.getSecret() != cardFrom.getSecret()) {
+            return ResponseEntity.status(400).body(new MessageResponse("Wrong secret or person info"));
+        }
+
         if (cardFrom.getAmount() < dto.getAmount()) {
             return ResponseEntity.status(400).body(new MessageResponse("Passing card is low of money"));
         }
 
         if (terminalKeyService.findByKey(dto.getKey()) == null) {
             return ResponseEntity.status(404).body(new MessageResponse("Catcher t-key with this key not found"));
-        }
-
-        if (!Objects.equals(dto.getPerson(), cardFrom.getPerson()) || dto.getSecret() != cardFrom.getSecret()) {
-            return ResponseEntity.status(400).body(new MessageResponse("Wrong secret or person info"));
         }
 
         return ResponseEntity.status(200)

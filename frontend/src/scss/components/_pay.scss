@@ -1,0 +1,23 @@
+.pay__container {
+    width: 100%;
+    display: flex;
+
+    .div {
+        width: 50%;
+    }
+}
+
+.pay__card__img {
+    width: 400px;
+}
+
+.pay__main__container {
+    width: 50%;
+}
+
+.pay__img__container {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

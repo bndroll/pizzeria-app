@@ -1,0 +1,58 @@
+@import '../variables';
+
+.categories {
+  ul {
+    display: flex;
+
+    li {
+      background-color: #f9f9f9;
+      padding: 13px 30px;
+      border-radius: 30px;
+      margin-right: 10px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.1s ease-in-out;
+      border: 2px solid transparent;
+      @include noselect();
+
+      &:hover {
+        background-color: darken(#f9f9f9, 2%);
+      }
+
+      &:active {
+        background-color: darken(#f9f9f9, 5%);
+      }
+
+      &.active {
+        background-color: #282828;
+        color: #fff;
+      }
+
+      &.top-category {
+        position: relative;
+        border: 2px solid $orange;
+
+        &:before {
+          display: block;
+          content: ' ';
+          position: absolute;
+          left: 50%;
+          top: -20px;
+          transform: translateX(-50%);
+          width: 30px;
+          height: 30px;
+          border-radius: 50%;
+          background-color: #ffffff;
+          background-image: url("../../assets/icons/crown.svg");
+          background-repeat: no-repeat;
+          background-position: center;
+          z-index: 2;
+        }
+
+        &.active {
+          border: 2px solid transparent;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,18 @@
+.form__container {
+    display: grid;
+    grid-template: 1fr 1fr 1fr / 1fr 1fr;
+    grid-template-areas: "username ." "password password" ". .";
+    grid-gap: 15px;
+}
+
+.field__username {
+    grid-area: username;
+}
+
+.field__password {
+    grid-area: password;
+}
+
+.form__button {
+    margin-top: 20px;
+}

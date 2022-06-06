@@ -1,0 +1,92 @@
+@import '../variables';
+
+.auth__title {
+    font-size: 25px;
+    color: $black;
+    font-weight: 700;
+    margin-bottom: 25px;
+}
+
+.auth__field__block {
+    position: relative;
+    margin-bottom: 5px;
+}
+
+.auth__field__input {
+    display: block;
+    width: 100%;
+    padding: 8px 20px;
+    height: 60px;
+    background: #E9EFF6;
+    line-height: 1.25;
+    border-width: 0;
+    border-radius: 20px;
+    background-clip: padding-box;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+
+    &::placeholder {
+        color: transparent;
+    }
+
+    &:focus, &:not(:placeholder-shown) {
+        padding-top: 20px;
+        padding-bottom: 10px;
+    }
+
+    &:focus ~ .field__label, &:not(:placeholder-shown) ~ .field__label {
+        opacity: .5;
+        transform: scale(.85) translateY(-13px);
+    }
+}
+
+.field__label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    padding: 18px 22px;
+    pointer-events: none;
+    color: lighten($black, 30);
+    border: 1px solid transparent;
+    transform-origin: 0 0;
+    transition: opacity .15s ease-in-out, transform .15s ease-in-out;
+}
+
+.field__error {
+    opacity: 0.7 !important;
+    color: red;
+}
+
+// ---- //
+
+.auth__button_inner {
+    margin-bottom: 40px;
+
+    button {
+        margin-right: 10px;
+    }
+}
+
+.auth__container {
+    width: 100%;
+    display: flex;
+
+    .div {
+        width: 50%;
+    }
+}
+
+.auth__card__img {
+    width: 400px;
+}
+
+.auth__main__container {
+    width: 50%;
+}
+
+.auth__img__container {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

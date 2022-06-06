@@ -20,7 +20,7 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody RegisterDto dto) {
         if (userService.existsByUsername(dto.getUsername()) || userService.existsByEmail(dto.getEmail()))
-            return ResponseEntity.status(404).body(new MessageResponse("User already exist"));
+            return ResponseEntity.status(401).body(new MessageResponse("User already exist"));
 
         return ResponseEntity.ok(userService.create(dto));
     }

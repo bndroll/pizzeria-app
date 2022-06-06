@@ -33,6 +33,7 @@ public class IdentityService {
                 .collect(Collectors.toSet());
 
         return UserResponse.builder()
+                .id(user.getId())
                 .username(user.getUsername())
                 .email(user.getEmail())
                 .roles(roleResponse)
