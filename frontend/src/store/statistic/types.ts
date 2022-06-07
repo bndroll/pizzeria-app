@@ -1,3 +1,13 @@
+import { Status } from '../types';
+
+
+export interface IStatisticSliceState {
+	mostPopularItems: IStatisticMostPopularPizzasResponse[];
+	mostOrderedItems: IStatisticMostPopularPizzasResponse[];
+	status: Status;
+	errorMessage: string | null;
+}
+
 export interface IStatisticMostPopularPizzasResponse {
 	id: number;
 	title: string;

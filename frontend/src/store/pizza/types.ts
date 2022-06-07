@@ -10,7 +10,7 @@ export interface IPizzaSliceState {
 }
 
 export interface ICreatePizzaRequest {
-	file: any;
+	file: File;
 	title: string;
 	type: string;
 	size: number;
@@ -31,8 +31,14 @@ export interface IPizzaResponse {
 }
 
 export interface IUpdatePizzaRequest {
+	id: number;
 	price: number;
 	rating: number;
+}
+
+export interface IUpdatePizzaGroupPhotoRequest {
+	title: string;
+	file: File;
 }
 
 export interface ISetPizzasByFilters {
@@ -55,4 +61,8 @@ export interface IPizzaView {
 	category: string;
 	rating: number;
 	price: number;
+}
+
+export enum PizzaStateErrors {
+	ALREADY_EXIST = "Пицца уже существует"
 }

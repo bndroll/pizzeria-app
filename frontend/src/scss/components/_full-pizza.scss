@@ -1,0 +1,46 @@
+.full__pizza {
+    &__wrapper {
+        width: 85%;
+        margin: 50px auto 80px;
+        display: flex;
+        align-items: center;
+    }
+
+    &__image {
+        width: 470px;
+    }
+
+    &__info {
+        margin-left: 80px;
+    }
+
+    &__title {
+        font-size: 40px;
+        font-weight: 800;
+        margin-bottom: 40px;
+    }
+
+    &__details {
+        display: grid;
+        grid-template: repeat(5, 1fr) / 1fr 2fr;
+        font-size: 20px;
+        grid-row-gap: 3px;
+        margin-bottom: 40px;
+    }
+
+    &__key {
+        font-weight: 700;
+    }
+
+    &__button {
+        margin: 0 12px 10px 0;
+        font-size: 16px;
+        padding: 12px 36px;
+    }
+
+    &__back {
+        margin-bottom: 20px;
+        padding: 12px 36px;
+        font-size: 16px;
+    }
+}

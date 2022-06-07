@@ -1,13 +1,26 @@
 import axios from 'axios';
-import { ICreatePizzaRequest, IPizzaResponse, IUpdatePizzaRequest } from '../../store/pizza/types';
+import {
+	ICreatePizzaRequest,
+	IPizzaResponse,
+	IUpdatePizzaGroupPhotoRequest,
+	IUpdatePizzaRequest
+} from '../../store/pizza/types';
 import { ICategoryResponse } from '../../store/filter/types';
 
 
 export const pizzaAPI = {
 	async create(requestData: ICreatePizzaRequest): Promise<IPizzaResponse> {
-		// form data
+		const formData = new FormData();
 
-		const res = await axios.post(`${process.env.REACT_APP_PIZZA_SERVER_URL}/pizza`, {}, {
+		formData.append('file', requestData.file);
+		formData.append('title', requestData.title);
+		formData.append('type', requestData.type);
+		formData.append('size', String(requestData.size));
+		formData.append('category', requestData.category);
+		formData.append('price', String(requestData.price));
+		formData.append('rating', String(requestData.rating));
+
+		const res = await axios.post(`${process.env.REACT_APP_PIZZA_SERVER_URL}/pizza`, formData, {
 			headers: {
 				Authorization: `Bearer ${localStorage.getItem('token')}`
 			}
@@ -56,32 +69,26 @@ export const pizzaAPI = {
 		return res.data;
 	},
 
-	async update(id: number, dto: IUpdatePizzaRequest): Promise<IPizzaResponse> {
-		const res = await axios.patch(`${process.env.REACT_APP_PIZZA_SERVER_URL}/pizza/${id}`, dto, {
-			headers: {
-				Authorization: `Bearer ${localStorage.getItem('token')}`
-			}
-		});
+	async update(dto: IUpdatePizzaRequest): Promise<IPizzaResponse> {
+		const res = await axios.patch(`${process.env.REACT_APP_PIZZA_SERVER_URL}/pizza/${dto.id}`,
+			{
+				price: dto.price,
+				rating: dto.rating
+			}, {
+				headers: {
+					Authorization: `Bearer ${localStorage.getItem('token')}`
+				}
+			});
 
 		return res.data;
 	},
 
-	async updatePhoto(id: number, file: any): Promise<IPizzaResponse> {
-		// form data
+	async updatePizzaGroupPhotoByTitle(dto: IUpdatePizzaGroupPhotoRequest): Promise<IPizzaResponse[]> {
+		const formData = new FormData();
 
-		const res = await axios.patch(`${process.env.REACT_APP_PIZZA_SERVER_URL}/pizza/${id}/photo`, {}, {
-			headers: {
-				Authorization: `Bearer ${localStorage.getItem('token')}`
-			}
-		});
+		formData.append('file', dto.file);
 
-		return res.data;
-	},
-
-	async updatePizzaGroupPhotoByTitle(title: string, file: any): Promise<IPizzaResponse> {
-		// form data
-
-		const res = await axios.patch(`${process.env.REACT_APP_PIZZA_SERVER_URL}/pizza/group-photo?title=${title}`, {}, {
+		const res = await axios.patch(`${process.env.REACT_APP_PIZZA_SERVER_URL}/pizza/group-photo?title=${dto.title}`, formData, {
 			headers: {
 				Authorization: `Bearer ${localStorage.getItem('token')}`
 			}

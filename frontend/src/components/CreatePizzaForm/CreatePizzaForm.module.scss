@@ -1,0 +1,99 @@
+@import '../../scss/variables';
+
+.form__container {
+    display: grid;
+    grid-template: 1fr 1fr 1fr 1fr / 1fr 1fr 1fr  1fr 1fr 1fr;
+    grid-template-areas:
+            "file file file file file file"
+            "title title title title title title"
+            "type type size size category category"
+            "price price price rating rating rating";
+    grid-gap: 15px;
+    grid-row-gap: 0;
+}
+
+.file__input__container {
+    width: 100%;
+    position: relative;
+    margin: 15px 0;
+    grid-area: file;
+}
+
+.file__input {
+    opacity: 0;
+    top: -1000px;
+    position: absolute;
+
+    &__label {
+        width: 100%;
+        max-width: 210px;
+        height: 45px;
+        background: $orange;
+        color: #fff;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        border-radius: 20px;
+        cursor: pointer;
+        margin-bottom: 10px;
+
+        &__img {
+            height: 45px;
+            width: 50px;
+            margin-right: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-right: 1px solid #fff;
+        }
+
+        &__text {
+            color: #ffffff;
+            line-height: 1;
+            margin-top: 1px;
+        }
+    }
+
+    &__name {
+        font-size: 16px;
+        font-weight: 700;
+        margin-left: 5px;
+    }
+
+    &__error {
+        position: absolute;
+        right: 5px;
+        top: 25%;
+        color: red;
+    }
+}
+
+.field__title {
+    grid-area: title;
+}
+
+.field__type {
+    grid-area: type;
+}
+
+.field__size {
+    grid-area: size;
+}
+
+.field__category {
+    grid-area: category;
+}
+
+.field__price {
+    grid-area: price;
+}
+
+.field__rating {
+    grid-area: rating;
+}
+
+.form__button {
+    display: block;
+    margin-top: 20px;
+}

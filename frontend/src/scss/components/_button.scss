@@ -113,6 +113,24 @@
     }
   }
 
+  &--disabled {
+    background-color: #cbcbcb;
+    color: #ffffff;
+    display: inline-block;
+    border-radius: 30px;
+    padding: 10px 22px;
+    min-width: 100px;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color $duration ease-in-out, border-color $duration ease-in-out;
+    border: 1px solid transparent;
+
+    span {
+      font-size: 16px;
+      color: #ffffff;
+    }
+  }
+
   &--green {
     background-color: #fff;
     border-color: #42b942;

@@ -14,7 +14,7 @@ import { findCategories } from '../store/filter/asyncActions';
 import { Sort } from '../components/Sort';
 import { findAllPizzas } from '../store/pizza/asyncActions';
 import { setItemsByFilters } from '../store/pizza/slice';
-import { selectPizzaStatus, selectPizzaViews } from '../store/pizza/selectors';
+import { selectPizzaStatus, selectPizzaViews, selectPizzaViewsByFilters } from '../store/pizza/selectors';
 import { Skeleton } from '../components/PizzaBlockSkeleton';
 import { PizzaBlock } from '../components/PizzaBlock';
 import { findOrders } from '../store/pizzaOrder/asyncActions';
@@ -27,7 +27,8 @@ export const Home: React.FC = () => {
 	const activeCategory = useSelector(selectActiveCategory);
 	const sortTypes = useSelector(selectSortTypes);
 	const activeSortType = useSelector(selectActiveSortType);
-	const pizzas = useSelector(selectPizzaViews);
+	const pizzaViews = useSelector(selectPizzaViews);
+	const pizzaViewsByFilters = useSelector(selectPizzaViewsByFilters);
 	const pizzasStatus = useSelector(selectPizzaStatus);
 	const searchValue = useSelector(selectSearchValue);
 
@@ -43,7 +44,7 @@ export const Home: React.FC = () => {
 			sortType: activeSortType,
 			searchText: searchValue
 		}));
-	}, [activeCategory, activeSortType, searchValue]);
+	}, [pizzaViews, activeCategory, activeSortType, searchValue]);
 
 	const changeActiveCategoryHandler = (category: string | null) => {
 		dispatch(setActiveCategory(category));
@@ -55,7 +56,7 @@ export const Home: React.FC = () => {
 
 	const pizzaSkeletons = [...new Array(6)].map((_, i) => <Skeleton key={i}/>);
 
-	const pizzaBlocks = pizzas.map((pizza, i) => <PizzaBlock key={`${pizza.title}_${i}`}
+	const pizzaBlocks = pizzaViewsByFilters.map((pizza, i) => <PizzaBlock key={`${pizza.title}_${i}`}
 															 title={pizza.title}
 															 imageUrl={pizza.imageUrl}
 															 types={pizza.type}

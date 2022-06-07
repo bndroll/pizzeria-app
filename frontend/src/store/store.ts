@@ -6,6 +6,7 @@ import filter from './filter/slice';
 import cart from './cart/slice';
 import pay from './pay/slice';
 import pizzaOrders from './pizzaOrder/slice';
+import statistic from './statistic/slice';
 
 
 export const store = configureStore({
@@ -15,7 +16,8 @@ export const store = configureStore({
 		filter,
 		cart,
 		pay,
-		pizzaOrders
+		pizzaOrders,
+		statistic
 	}
 });
 

@@ -2,6 +2,14 @@
 
 ## Technologies stack 
 
+#### Frontend
+* TypeScript
+* SCSS, CSS Modules
+* React
+* Redux (RTK)
+* React Hook Form, yup
+* React Router Dom
+
 #### Pizzeria server
 * Java
 * Spring Boot

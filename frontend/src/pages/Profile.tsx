@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
 import { selectUserData, selectUserStatus } from '../store/user/selectors';
 import { useAppDispatch } from '../store/store';
@@ -45,9 +45,21 @@ const Profile: React.FC = () => {
 
 				<div className="orders-container">
 					{
-						pizzaOrders.map(item => <PizzaOrderItem key={item.id}
-																address={item.address}
-																orderDetails={item.orderDetails}/>)
+						pizzaOrders.length ?
+							pizzaOrders.map(item => <PizzaOrderItem key={item.id}
+																	address={item.address}
+																	orderDetails={item.orderDetails}/>)
+							:
+							(
+								<div className="orders__empty">
+									Заказов нет <span>😕</span>
+									<p>
+										Вероятней всего, вы не заказывали ещё пиццу.
+										<br/>
+										Для того, чтобы заказать пиццу, перейди на главную страницу.
+									</p>
+								</div>
+							)
 					}
 				</div>
 			</div>

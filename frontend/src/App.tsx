@@ -18,6 +18,7 @@ const NotFound = React.lazy(() => import('./pages/NotFound'));
 const Profile = React.lazy(() => import('./pages/Profile'));
 const Pay = React.lazy(() => import('./pages/Pay'));
 const Admin = React.lazy(() => import('./pages/Admin'));
+const CreatePizza = React.lazy(() => import('./pages/CreatePizza'));
 
 const SuspendedCart = withSuspense(Cart);
 const SuspendedFullPizza = withSuspense(FullPizza);
@@ -25,6 +26,7 @@ const SuspendedNotFound = withSuspense(NotFound);
 const SuspendedProfile = withSuspense(Profile);
 const SuspendedPay = withSuspense(Pay);
 const SuspendedAdmin = withSuspense(Admin);
+const SuspendedCreatePizza = withSuspense(CreatePizza);
 
 function App() {
 	const navigate = useNavigate();
@@ -50,6 +52,7 @@ function App() {
 		<Routes>
 			<Route path="/auth" element={<Auth/>}/>
 			<Route path="/pay" element={<SuspendedPay/>}/>
+			<Route path="/create-pizza" element={<SuspendedCreatePizza/>}/>
 
 			<Route path="/" element={<MainLayout/>}>
 				<Route path="" element={<Home/>}/>

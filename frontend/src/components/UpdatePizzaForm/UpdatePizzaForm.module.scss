@@ -1,0 +1,24 @@
+.form__wrapper {
+    width: 50%;
+    margin-bottom: 40px;
+}
+
+.form__container {
+    display: grid;
+    grid-template: 1fr 1fr 0.1fr / 3fr 1fr;
+    grid-template-areas: "price ." "rating ." ". .";
+    grid-gap: 10px;
+}
+
+.field__price {
+    grid-area: price;
+}
+
+.field__rating {
+    grid-area: rating;
+}
+
+.form__button {
+    display: block;
+    margin-top: 20px;
+}
