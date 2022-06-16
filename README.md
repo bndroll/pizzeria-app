@@ -27,8 +27,8 @@
 * PostgreSQL, JPA
 
 #### Download bank card server
-* NodeJs
-* Express
+* TypeScript
+* NodeJs, Express
 * Multer
 * Puppeteer
 
