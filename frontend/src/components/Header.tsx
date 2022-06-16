@@ -4,15 +4,20 @@ import { useSelector } from 'react-redux';
 import { Search } from './Search/Search';
 import { selectCart } from '../store/cart/selectors';
 import logoSvg from '../assets/icons/pizza-logo.svg';
+import cookies from 'js-cookie';
+import { selectUserData } from '../store/user/selectors';
 
 
 export const Header: React.FC = () => {
 	const {items, totalPrice, totalCount} = useSelector(selectCart);
+	const user = useSelector(selectUserData);
 	const location = useLocation();
 
 	useEffect(() => {
-		localStorage.setItem('cart', JSON.stringify(items));
-	}, [items]);
+		if (user) {
+			cookies.set(`cart_${user.id}`, JSON.stringify(items), {expires: 30});
+		}
+	}, [items, user]);
 
 	return (
 		<div className="header">

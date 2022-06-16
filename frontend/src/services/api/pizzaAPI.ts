@@ -6,6 +6,7 @@ import {
 	IUpdatePizzaRequest
 } from '../../store/pizza/types';
 import { ICategoryResponse } from '../../store/filter/types';
+import cookies from 'js-cookie';
 
 
 export const pizzaAPI = {
@@ -22,7 +23,7 @@ export const pizzaAPI = {
 
 		const res = await axios.post(`${process.env.REACT_APP_PIZZA_SERVER_URL}/pizza`, formData, {
 			headers: {
-				Authorization: `Bearer ${localStorage.getItem('token')}`
+				Authorization: `Bearer ${cookies.get('token')}`
 			}
 		});
 
@@ -32,7 +33,7 @@ export const pizzaAPI = {
 	async findAll(): Promise<IPizzaResponse[]> {
 		const res = await axios.get(`${process.env.REACT_APP_PIZZA_SERVER_URL}/pizza`, {
 			headers: {
-				Authorization: `Bearer ${localStorage.getItem('token')}`
+				Authorization: `Bearer ${cookies.get('token')}`
 			}
 		});
 
@@ -42,7 +43,7 @@ export const pizzaAPI = {
 	async findById(id: number): Promise<IPizzaResponse> {
 		const res = await axios.get(`${process.env.REACT_APP_PIZZA_SERVER_URL}/pizza/${id}`, {
 			headers: {
-				Authorization: `Bearer ${localStorage.getItem('token')}`
+				Authorization: `Bearer ${cookies.get('token')}`
 			}
 		});
 
@@ -52,7 +53,7 @@ export const pizzaAPI = {
 	async findByTitle(title: string): Promise<IPizzaResponse[]> {
 		const res = await axios.get(`${process.env.REACT_APP_PIZZA_SERVER_URL}/pizza/find?title=${title}`, {
 			headers: {
-				Authorization: `Bearer ${localStorage.getItem('token')}`
+				Authorization: `Bearer ${cookies.get('token')}`
 			}
 		});
 
@@ -62,7 +63,7 @@ export const pizzaAPI = {
 	async findPizzaCategories(): Promise<ICategoryResponse[]> {
 		const res = await axios.get(`${process.env.REACT_APP_PIZZA_SERVER_URL}/pizza/categories`, {
 			headers: {
-				Authorization: `Bearer ${localStorage.getItem('token')}`
+				Authorization: `Bearer ${cookies.get('token')}`
 			}
 		});
 
@@ -76,7 +77,7 @@ export const pizzaAPI = {
 				rating: dto.rating
 			}, {
 				headers: {
-					Authorization: `Bearer ${localStorage.getItem('token')}`
+					Authorization: `Bearer ${cookies.get('token')}`
 				}
 			});
 
@@ -90,7 +91,7 @@ export const pizzaAPI = {
 
 		const res = await axios.patch(`${process.env.REACT_APP_PIZZA_SERVER_URL}/pizza/group-photo?title=${dto.title}`, formData, {
 			headers: {
-				Authorization: `Bearer ${localStorage.getItem('token')}`
+				Authorization: `Bearer ${cookies.get('token')}`
 			}
 		});
 
@@ -100,7 +101,7 @@ export const pizzaAPI = {
 	async delete(id: number): Promise<IPizzaResponse> {
 		const res = await axios.delete(`${process.env.REACT_APP_PIZZA_SERVER_URL}/pizza/${id}`, {
 			headers: {
-				Authorization: `Bearer ${localStorage.getItem('token')}`
+				Authorization: `Bearer ${cookies.get('token')}`
 			}
 		});
 
@@ -110,7 +111,7 @@ export const pizzaAPI = {
 	async deleteByTitle(title: string): Promise<IPizzaResponse[]> {
 		const res = await axios.delete(`${process.env.REACT_APP_PIZZA_SERVER_URL}/pizza?title=${title}`, {
 			headers: {
-				Authorization: `Bearer ${localStorage.getItem('token')}`
+				Authorization: `Bearer ${cookies.get('token')}`
 			}
 		});
 

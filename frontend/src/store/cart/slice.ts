@@ -1,10 +1,15 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ICartItem, ICartSliceState } from './types';
-import { getCartFromLocalStorage } from './utils/get-cart-from-local-storage';
 import { calcTotalPrice } from './utils/calc-total-price';
+import { getCartFromCookies } from './utils/get-cart-from-cookies';
+import { findUserData } from '../user/asyncActions';
 
 
-const initialState: ICartSliceState = getCartFromLocalStorage();
+// const initialState: ICartSliceState = getCartFromCookies();
+const initialState: ICartSliceState = {
+	items: [],
+	totalPrice: 0
+};
 
 const cartSlice = createSlice({
 	name: 'cart',
@@ -44,6 +49,13 @@ const cartSlice = createSlice({
 			state.items = [];
 			state.totalPrice = 0;
 		}
+	},
+	extraReducers: (builder) => {
+		builder.addCase(findUserData.fulfilled, (state, action) => {
+			const {items, totalPrice} = getCartFromCookies(action.payload.id);
+			state.items = items;
+			state.totalPrice = totalPrice;
+		});
 	}
 });
 
